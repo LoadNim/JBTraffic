@@ -29,11 +29,9 @@ def getBusInfo(busStation, busType):
     busData = pd.read_excel('./Data/BusData.xlsx')
     busData['시간'] = busData['시간'].astype(str)
     timeTable = busData[(busData['노선'] == stationName) & (busData['구분'] == typeName)]
-    print(timeTable)
     curTime = datetime.now().strftime('%H:%M:%S')
     timeTable = timeTable[timeTable['시간'] > curTime]
-    print('-'*50)
-    print('-' * 50)
+    print(f'현재 시간 {curTime} 이후의 {stationName}역 {typeName}버스 정보')
     print(timeTable)
 
 
@@ -132,17 +130,13 @@ def preprocessImage(img):
     imgBlur = cv2.GaussianBlur(imgGray, (3, 3), 1)  # 가우시안 블러 적용
     imgThreshold = cv2.adaptiveThreshold(imgBlur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 25, 16) # 임계처리
     imgMedian = cv2.medianBlur(imgThreshold, 5) # 미디언 블러 적용
-    cv2.imshow('test1', imgGray)
-    cv2.imshow('test2', imgBlur)
-    cv2.imshow('test3', imgThreshold)
-    cv2.imshow('test4', imgMedian)
     kernel = np.ones((3, 3), np.uint8)
     imgDilate = cv2.dilate(imgMedian, kernel, iterations=1) # 팽창 적용
     return imgDilate
 
 
 while True:
-    selMenu = int(input('메뉴 입력 '))
+    selMenu = int(input('메뉴 입력 (1: 셔틀 버스 정보, 2: 주차장 정보) '))
     if selMenu == 1:
         displayBusInfo()
     elif selMenu == 2:
