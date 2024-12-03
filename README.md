@@ -1,7 +1,7 @@
 # JBTraffic Project
 
 - 개발언어: Python
-- 사용라이브러리: opencv, pickle, cvzone, numpy, pandas
+- 사용 라이브러리: opencv, pickle, cvzone, numpy, pandas
 
 ## 기능 설명
 
