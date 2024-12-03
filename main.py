@@ -2,17 +2,47 @@ import cv2
 import pickle
 import cvzone
 import numpy as np
-
+import pandas as pd
+from datetime import datetime
 
 def displayBusInfo():
-    # 버스 관련 정보를 표시하는 함수
-    print('a')
+    # 원하는 노선과 등하교를 입력받아 해당하는 정보를 출력하는 함수
+    while True:
+        busStation = int(input('1. 삼송, 2. 백석 '))
+        busType = int(input('1. 등교, 2. 하교 '))
+        if busStation not in [1, 2] or busType not in [1, 2]:
+            print('잘못된 입력 값 입니다.')
+            break
+        getBusInfo(busStation, busType)
+
+def getBusInfo(busStation, busType):
+    """
+    인자 값을 바탕으로 해당하는 버스 시간표를 반환하는 함수
+
+    :param busStation: 선택한 노선 (1: 삼송, 2: 백석)
+    :param busType: 선택한 등하교 구분 (1: 등교, 2: 하교)
+    :return: (pd.DataFrame) 조건에 맞는 DataFrame을 반환
+    """
+
+    stationName = '삼송' if busStation == 1 else '백석'
+    typeName = '등교' if busType == 1 else '하교'
+    busData = pd.read_excel('./Data/BusData.xlsx')
+    busData['시간'] = busData['시간'].astype(str)
+    timeTable = busData[(busData['노선'] == stationName) & (busData['구분'] == typeName)]
+    print(timeTable)
+    curTime = datetime.now().strftime('%H:%M:%S')
+    timeTable = timeTable[timeTable['시간'] > curTime]
+    print('-'*50)
+    print('-' * 50)
+    print(timeTable)
 
 
 def displayParkingStatus():
     # 각 주차장의 주차 공간을 분석하고 출력하는 함수
-    print(f'주차장 1 : {analyzeParkingLot(107, 48, 1)}')
-    print(f'주차장 2 : {analyzeParkingLot(70, 30, 2)}')
+    resultParking2 = analyzeParkingLot(70, 30, 2)
+    resultParking1 = analyzeParkingLot(107, 48, 1)
+    print(f'주차장 1 : {resultParking1}')
+    print(f'주차장 2 : {resultParking2}')
 
 
 def analyzeParkingLot(width, height, lotNumber):
@@ -102,6 +132,10 @@ def preprocessImage(img):
     imgBlur = cv2.GaussianBlur(imgGray, (3, 3), 1)  # 가우시안 블러 적용
     imgThreshold = cv2.adaptiveThreshold(imgBlur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 25, 16) # 임계처리
     imgMedian = cv2.medianBlur(imgThreshold, 5) # 미디언 블러 적용
+    cv2.imshow('test1', imgGray)
+    cv2.imshow('test2', imgBlur)
+    cv2.imshow('test3', imgThreshold)
+    cv2.imshow('test4', imgMedian)
     kernel = np.ones((3, 3), np.uint8)
     imgDilate = cv2.dilate(imgMedian, kernel, iterations=1) # 팽창 적용
     return imgDilate
