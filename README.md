@@ -21,3 +21,7 @@
 
 ## 프로젝트 진행 일지
 https://padlet.com/ssoomin99/578-x7mt25p39abwkgcx
+
+## 시연 영상
+https://padlet.com/ssoomin99/578-x7mt25p39abwkgcx/wish/LNV1Q7eJgAqoWmq3 (알람 외)
+https://padlet.com/ssoomin99/578-x7mt25p39abwkgcx/wish/E851Q0w2gn6baVAb (알람 기능)
