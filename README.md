@@ -18,3 +18,6 @@
 - 김주호 (버스 담당)
 - 김진 (GUI 담당)
 - 신수민 (주차장 담당)
+
+## 프로젝트 진행 일지
+https://padlet.com/ssoomin99/578-x7mt25p39abwkgcx
